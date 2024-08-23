@@ -28,3 +28,6 @@ terraform destroy
 HCL - HashiCorp Configuration Language
 
 Terraform scripts are written in HCL
+
+https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax
+
