@@ -9,9 +9,9 @@ terraform {
 
 provider "google" {
 
-  project = "qwiklabs-gcp-03-c4275109002a"
-  region  = "us-west1"
-  zone    = "us-west1-a"
+  project = var.project_id
+  region  = var.project_region
+  zone    = var.project_zone
 }
 
 resource "google_compute_network" "vpc_network" {
@@ -55,7 +55,7 @@ resource "google_compute_address" "vm_static_ip" {
 
 # New resource for the storage bucket our application will use.
 resource "google_storage_bucket" "example_bucket" {
-  name     = "2024-terraform-example-bucket"
+  name     = var.bucket_name
   location = "US"
 
   website {
