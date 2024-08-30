@@ -1,0 +1,85 @@
+Document processing complete.
+Text: 
+FakeDoc M.D.
+HEALTH INTAKE FORM
+Please fill out the questionnaire carefully. The information you provide will be used to complete
+your health profile and will be kept confidential.
+Date:
+9/14/19
+Name:
+Sally Walker
+DOB: 09/04/1986
+Address: 24 Barney Lane
+City: Towaco
+State: NJ Zip: 07082
+Email: Sally, walker@cmail.com
+_Phone #: (906) 917-3486
+Gender: F
+Marital Status:
+Single Occupation: Software Engineer
+Referred By: None
+Emergency Contact: Eva Walker Emergency Contact Phone: (906)334-8926
+Describe your medical concerns (symptoms, diagnoses, etc):
+Ranny nose, mucas in thwat, weakness,
+aches, chills, tired
+Are you currently taking any medication? (If yes, please describe):
+Vyvanse (25mg) daily for attention.
+
+
+Form data detected:
+
+Page Number:1
+Are you currently taking any medication? (If yes, please describe):
+Vyvanse (25mg) daily for attention.
+  (Confidence Scores: (Name) 0.9433, (Value) 0.9433)
+
+_Phone #: walker@cmail.com
+(906  (Confidence Scores: (Name) 0.9323, (Value) 0.9323)
+
+Zip: 07082
+  (Confidence Scores: (Name) 0.9142, (Value) 0.9142)
+
+City: Towaco
+  (Confidence Scores: (Name) 0.9005, (Value) 0.9005)
+
+State: NJ   (Confidence Scores: (Name) 0.8939, (Value) 0.8939)
+
+DOB: 09/04/1986
+  (Confidence Scores: (Name) 0.8852, (Value) 0.8852)
+
+Gender: F
+  (Confidence Scores: (Name) 0.8824, (Value) 0.8824)
+
+Name:
+Sally Walker
+  (Confidence Scores: (Name) 0.8728, (Value) 0.8728)
+
+Marital Status:
+Single   (Confidence Scores: (Name) 0.8524, (Value) 0.8524)
+
+Describe your medical concerns (symptoms, diagnoses, etc):
+Ranny nose, mucas in thwat, weakness,
+aches, chills, tired
+  (Confidence Scores: (Name) 0.8439, (Value) 0.8439)
+
+Date:
+9/14/19
+  (Confidence Scores: (Name) 0.83, (Value) 0.83)
+
+Address: 24 Barney Lane
+  (Confidence Scores: (Name) 0.8239, (Value) 0.8239)
+
+Occupation: Software Engineer
+  (Confidence Scores: (Name) 0.815, (Value) 0.815)
+
+Emergency Contact: Eva Walker   (Confidence Scores: (Name) 0.8134, (Value) 0.8134)
+
+Email: Sally, walker@cmail.com
+  (Confidence Scores: (Name) 0.7974, (Value) 0.7974)
+
+Referred By: None
+  (Confidence Scores: (Name) 0.7694, (Value) 0.7694)
+
+Emergency Contact Phone: (906)334-8926
+  (Confidence Scores: (Name) 0.7612, (Value) 0.7612)
+
