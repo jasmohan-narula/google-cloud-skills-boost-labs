@@ -21,7 +21,7 @@ script.google.com
 ### In AppScript Code Editor
 1. Click on the **Add a service** icon adjacent to **Services**.
 2. In the Add a service dialog, select any applicable services and APIs.
-3. Select BigQuery API and click Add to close.
+3. Select BigQuery API, V2 and click Add to close.
 
 Change the file name to bq-sheets-slides.gs and press Enter. Copy the code in the src folder. Save the file.
 
