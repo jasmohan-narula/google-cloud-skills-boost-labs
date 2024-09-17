@@ -110,3 +110,90 @@ gsutil cp random.txt gs://${BUCKET_NAME}/random.txt
 
 ### Output in Cloud Run
 Navigate to Navigation menu > Cloud Run to check the logs of the Cloud Run service, you should see the received event.
+
+
+
+
+#
+
+# Get Started with Eventarc: Challenge Lab
+
+ARC118
+
+https://www.cloudskillsboost.google/course_templates/727/labs/461591
+
+
+## Task 1. Create a Pub/Sub topic
+```
+PROJECT_ID=$(gcloud config get-value project)
+REGION=us-east1
+gcloud config set run/region $REGION
+```
+
+```
+export TOPIC_ID=$PROJECT_ID-topic
+
+gcloud pubsub topics create $TOPIC_ID
+gcloud pubsub subscriptions create ${PROJECT_ID}-topic-sub --topic=${PROJECT_ID}-topic
+```
+
+
+## Task 2. Create a Cloud Run sink
+Create a Cloud Run sink with the following requirements:
+Service name: pubsub-events
+Image name: gcr.io/cloudrun/hello
+
+
+```
+export PROJECT_NUMBER="$(gcloud projects list \
+  --filter=$(gcloud config get-value project) \
+  --format='value(PROJECT_NUMBER)')"
+echo $PROJECT_NUMBER
+
+gcloud projects add-iam-policy-binding $(gcloud config get-value project) \
+  --member=serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com \
+  --role='roles/eventarc.admin'
+```
+
+```
+export SERVICE_NAME=pubsub-events
+export IMAGE_NAME="gcr.io/cloudrun/hello"
+
+gcloud run deploy ${SERVICE_NAME} \
+  --image ${IMAGE_NAME} \
+  --allow-unauthenticated \
+  --max-instances=3
+```
+
+
+
+## Task 3. Create and test a Pub/Sub event trigger using Eventarc
+Create a Pub/Sub event trigger named pubsub-events-trigger with the following requirements:
+- Use the Cloud Run sink and Pub/Sub topic created in the previous tasks.
+- To create the trigger on an existing Pub/Sub topic, add the following argument to the command used to create the trigger: --transport-topic=qwiklabs-gcp-00-4361ccd8af9d-topic
+
+Test the Pub/Sub event trigger by publishing a message to the Pub/Sub topic.
+
+
+
+```
+echo $TOPIC_ID
+echo $SERVICE_NAME
+
+gcloud config set run/region $REGION
+gcloud config set run/platform managed
+gcloud config set eventarc/location $REGION
+
+gcloud eventarc triggers create pubsub-events-trigger \
+  --destination-run-service=${SERVICE_NAME} \
+  --destination-run-region=$REGION \
+  --transport-topic=$TOPIC_ID \
+  --event-filters="type=google.cloud.pubsub.topic.v1.messagePublished"
+```
+
+### Verify
+```
+gcloud pubsub topics publish ${TOPIC_ID} --message="Hello there"
+
+gcloud logging read "resource.type=cloud_run_revision AND logName:('projects/${PROJECT_ID}/logs/run.googleapis.com%2Frequests')" --limit 50 --format "json"
+```

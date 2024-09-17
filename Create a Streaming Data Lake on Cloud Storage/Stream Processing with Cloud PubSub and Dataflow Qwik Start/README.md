@@ -87,7 +87,7 @@ gsutil rb gs://${BUCKET_NAME}
 
 
 
-
+#
 # Create a Streaming Data Lake on Cloud Storage: Challenge Lab
 ARC110
 
