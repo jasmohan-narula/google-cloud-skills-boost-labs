@@ -1,21 +1,21 @@
-/* globals exports, require */
-//jshint strict: false
-//jshint esversion: 6
-"use strict";
+const functions = require('@google-cloud/functions-framework');
 const crc32 = require("fast-crc32c");
 const { Storage } = require('@google-cloud/storage');
 const gcs = new Storage();
 const { PubSub } = require('@google-cloud/pubsub');
 const imagemagick = require("imagemagick-stream");
 
-exports.thumbnail = (event, context) => {
+functions.cloudEvent('memories-thumbnail-creator', cloudEvent => {
+  const event = cloudEvent.data;
+
+  console.log(`Event: ${event}`);
+  console.log(`Hello ${event.bucket}`);
+
   const fileName = event.name;
   const bucketName = event.bucket;
   const size = "64x64"
   const bucket = gcs.bucket(bucketName);
-  
-  const topicName = "wild-topic-886";
-
+  const topicName = "memories-topic-227";
   const pubsub = new PubSub();
   if ( fileName.search("64x64_thumbnail") == -1 ){
     // doesn't have a thumbnail, get the filename extension
@@ -65,4 +65,4 @@ exports.thumbnail = (event, context) => {
   else {
     console.log(`gs://${bucketName}/${fileName} already has a thumbnail`);
   }
-};
+});

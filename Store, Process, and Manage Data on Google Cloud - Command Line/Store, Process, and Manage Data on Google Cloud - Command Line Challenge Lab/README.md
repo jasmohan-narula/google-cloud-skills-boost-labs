@@ -1,8 +1,10 @@
 # Store, Process, and Manage Data on Google Cloud - Command Line: Challenge Lab
-
 ARC102
-
 https://www.cloudskillsboost.google/course_templates/659/labs/464091
+
+# Store, Process, and Manage Data on Google Cloud: Challenge Lab
+ARC100
+https://www.cloudskillsboost.google/course_templates/658/labs/464087
 
 
 ## Challenge scenario
@@ -90,8 +92,18 @@ gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID \
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member=serviceAccount:$BUCKET_SERVICE_ACCOUNT \
   --role=roles/pubsub.publisher
-
 ```
+
+For ARC100, run this additional command for permissions:-
+```
+SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member serviceAccount:$SERVICE_ACCOUNT \
+  --role roles/pubsub.publisher
+```
+
+
 
 ```
 export CLOUD_FUNCTION_NAME='wild-thumbnail-creator'
@@ -103,7 +115,11 @@ Update the contents of file index.js and package.json
 
 ```
 npm install
+```
 
+
+For ARC102, run this command to deploy:-
+```
 gcloud functions deploy $CLOUD_FUNCTION_NAME \
     --gen2 \
     --runtime=nodejs20 \
@@ -113,7 +129,22 @@ gcloud functions deploy $CLOUD_FUNCTION_NAME \
     --trigger-resource=$BUCKET_NAME \
     --trigger-event=google.storage.object.finalize \
     --allow-unauthenticated
+```
 
+For ARC100, run this command to deploy:-
+```
+gcloud functions deploy $CLOUD_FUNCTION_NAME \
+  --gen2 \
+  --runtime nodejs20 \
+  --entry-point $CLOUD_FUNCTION_NAME \
+  --source . \
+  --region $REGION \
+  --trigger-bucket $BUCKET \
+  --trigger-location $REGION \
+  --max-instances 1 \
+
+
+```
 gcloud functions describe $CLOUD_FUNCTION_NAME \
   --region=$REGION 
 ```
@@ -124,6 +155,11 @@ gcloud functions describe $CLOUD_FUNCTION_NAME \
 wget https://storage.googleapis.com/cloud-training/arc102/wildlife.jpg
 
 gsutil cp wildlife.jpg gs://$BUCKET_NAME
+
+
+wget https://storage.googleapis.com/cloud-training/gsp315/map.jpg
+gsutil cp map.jpg gs://$BUCKET_NAME
+
 ```
 
 Check in bucket. A file called wildlife.64x64_thumbnail.jpg will be created by the function.
