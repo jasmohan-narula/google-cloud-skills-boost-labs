@@ -10,3 +10,7 @@ nano spanner.tf
 terraform init
 
 terraform apply
+
+
+## Extra commands
+gcloud spanner databases execute-sql banking-db --instance=banking-instance  --sql="SELECT COUNT(*) FROM Customer;"
