@@ -14,7 +14,7 @@ REGION=us-east4
 gcloud config set compute/region $REGION
 
 ZONE=us-east4-c
-gcloud config set compute/zone us-central1-c
+gcloud config set compute/zone $ZONE
 
 PROJECT_ID=$(gcloud config get-value project)
 ```
@@ -86,7 +86,7 @@ REGION=us-east4
 gcloud config set compute/region $REGION
 
 ZONE=us-east4-c
-gcloud config set compute/zone us-central1-c
+gcloud config set compute/zone $ZONE
 
 PROJECT_ID=$(gcloud config get-value project)
 ```
