@@ -93,6 +93,8 @@ ARC110
 
 https://www.cloudskillsboost.google/course_templates/705/labs/461631
 
+ARC119
+https://www.cloudskillsboost.google/games/5426/labs/35170
 
 This is similar to above task with variable name changes and Python code instead of JAVA
 
@@ -105,7 +107,7 @@ TOPIC_ID=mytopic
 REGION=us-central1
 echo $PROJECT_ID $BUCKET_NAME $TOPIC_ID $REGION
 
-gcloud config set compute/region europe-west1
+gcloud config set compute/region $REGION
 ```
 
 ## Task 1 2 3
