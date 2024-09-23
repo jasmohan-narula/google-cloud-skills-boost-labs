@@ -1,0 +1,45 @@
+metadata_registry_defaults:
+  dataplex:
+    projects: qwiklabs-gcp-00-4b445ea9380e
+    locations: us-west1
+    lakes: ecommerce-lake
+    zones: customer-contact-raw-zone
+row_filters:
+  NONE:
+    filter_sql_expr: |-
+      True
+  INTERNATIONAL_ITEMS:
+    filter_sql_expr: |-
+      REGEXP_CONTAINS(item_id, 'INTNL')
+rule_dimensions:
+  - consistency
+  - correctness
+  - duplication
+  - completeness
+  - conformance
+  - integrity
+  - timeliness
+  - accuracy
+rules:
+  NOT_NULL:
+    rule_type: NOT_NULL
+    dimension: completeness
+  VALID_EMAIL:
+    rule_type: REGEX
+    dimension: conformance
+    params:
+      pattern: |-
+        ^[^@]+[@]{1}[^@]+$
+rule_bindings:
+  VALID_CUSTOMER:
+    entity_uri: bigquery://projects/qwiklabs-gcp-00-4b445ea9380e/datasets/customers/tables/contact_info
+    column_id: id
+    row_filter_id: NONE
+    rule_ids:
+      - NOT_NULL
+  VALID_EMAIL_ID:
+    entity_uri: bigquery://projects/qwiklabs-gcp-00-4b445ea9380e/datasets/customers/tables/contact_info
+    column_id: email
+    row_filter_id: NONE
+    rule_ids:
+      - VALID_EMAIL
