@@ -1,0 +1,10 @@
+description: Custom role description.
+etag: BwYi-HRaG1g=
+includedPermissions:
+- compute.instances.get
+- compute.instances.list
+- storage.buckets.get
+- storage.buckets.list
+name: projects/qwiklabs-gcp-00-1a17ce1caaa9/roles/viewer
+stage: DISABLED
+title: Role Viewer
