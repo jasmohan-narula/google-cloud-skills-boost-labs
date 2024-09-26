@@ -25,17 +25,18 @@ export REGION=us-east1
 
 The Cloud Storage bucket and BigQuery dataset for step 2 have been pre-created in this lab.
 
-Create a Dataplex lake named Sales Lake with two regional zones:
-Raw zone named Raw Customer Zone
-Curated zone named Curated Customer Zone
+Create a Dataplex lake named `Sales Lake` with two regional zones:
+- **Raw zone** named `Raw Customer Zone`
+- **Curated zone** named `Curated Customer Zone`
+
 Attach one pre-created asset to each zone:
-To the raw zone, attach the Cloud Storage bucket named qwiklabs-gcp-02-1d68c19bbb17-customer-online-sessions as a new asset named Customer Engagements.
-To the curated zone, attach the BigQuery dataset named qwiklabs-gcp-02-1d68c19bbb17.customer_orders as a new asset named Customer Orders.
+- To the **Raw zone**, attach the Cloud Storage bucket named `qwiklabs-gcp-00-d4c6cf614736-customer-online-sessions` as a new asset named **Customer Engagements**.
+- To the **Curated zone**, attach the BigQuery dataset named `qwiklabs-gcp-00-d4c6cf614736.customer_orders` as a new asset named **Customer Orders**.
 
 
 ### Create DATA Lake
 ```
-export PROJECT_ID="qwiklabs-gcp-02-1d68c19bbb17"
+export PROJECT_ID="qwiklabs-gcp-00-d4c6cf614736"
 export LAKE_NAME="sales-lake"
 
 gcloud config set project $PROJECT_ID
@@ -102,34 +103,36 @@ gcloud dataplex assets create customer-orders \
 
 ## Task 2. Create and apply a tag template to a zone
 
-Create a public tag template named Protected Customer Data Template with two enumerated fields:
-First field named Raw Data Flag with two values: Yes and No.
-Second field named Protected Contact Information Flag with two values: Yes and No
-Use this template to tag the Raw Customer Zone using a value of Yes for both flags.
+Create a public tag template named `Protected Customer Data Template` with two enumerated fields:
+
+- First field named `Raw Data Flag` with two values: `Yes` and `No`.
+- Second field named `Protected Contact Information Flag` with two values: `Yes` and `No`.
+
+Use this template to tag the `Raw Customer Zone` using a value of `Yes` for both flags.
 
 
 ---
 
 Do it in UI
 
-https://console.cloud.google.com/dataplex/templates/create?cloudshell=true&project=qwiklabs-gcp-01-f5c3af04c6aa
+https://console.cloud.google.com/dataplex/templates/create?cloudshell=true&project=qwiklabs-gcp-00-d4c6cf614736
 
 
 "Attach Tags" to Zone "Raw Customer Zone" object
 
-https://console.cloud.google.com/dataplex/projects/qwiklabs-gcp-01-f5c3af04c6aa/locations/us-east1/entryGroups/@dataplex_20edf768e1210d0a6cfefdc23d23a42d/entries/a4fe1c0f136d4f029fa5d0538f042e8d?cloudshell=true&project=qwiklabs-gcp-01-f5c3af04c6aa
+https://console.cloud.google.com/dataplex/projects/qwiklabs-gcp-00-d4c6cf614736/locations/us-east1/entryGroups/@dataplex_20edf768e1210d0a6cfefdc23d23a42d/entries/a4fe1c0f136d4f029fa5d0538f042e8d?cloudshell=true&project=qwiklabs-gcp-00-d4c6cf614736
 
 
 
 ## Task 3. Assign a Dataplex IAM role to another user
-Using the principle of least privilege, assign the appropriate Dataplex IAM role to User 2 (student-02-2efaf3136cf9@qwiklabs.net) that allows them to upload new Cloud Storage files to the Dataplex asset named Customer Engagements.
+Using the principle of least privilege, assign the appropriate Dataplex IAM role to User 2 (`student-01-ba2cb9a90f93@qwiklabs.net`) that allows them to upload new Cloud Storage files to the Dataplex asset named **Customer Engagements**.
 
 ---
 Do it in UI
 
 Dataplex > Manage Lakes > Secure
 
-https://console.cloud.google.com/dataplex/secure?cloudshell=true&project=qwiklabs-gcp-01-f5c3af04c6aa
+https://console.cloud.google.com/dataplex/secure?cloudshell=true&project=qwiklabs-gcp-00-d4c6cf614736
 
 Double click 'Customer Engagements'
 
@@ -142,10 +145,13 @@ View by Principals > Grant Access
 ## Task 4. Create and upload a data quality specification file to Cloud Storage
 The Cloud Storage bucket for step 2 has been pre-created in this lab.
 
-Create a data quality specification file named dq-customer-orders.yaml with the following specifications:
-- NOT NULL rule applied to the user_id column of the customer_orders.ordered_items table
-- NOT NULL rule applied to the order_id column of the customer_orders.ordered_items table
-Upload the file to the Cloud Storage bucket named qwiklabs-gcp-02-1d68c19bbb17-dq-config.
+Create a data quality specification file named `dq-customer-orders.yaml` with the following specifications:
+
+- `NOT NULL` rule applied to the `user_id` column of the `customer_orders.ordered_items` table.
+- `NOT NULL` rule applied to the `order_id` column of the `customer_orders.ordered_items` table.
+
+Upload the file to the Cloud Storage bucket named `qwiklabs-gcp-00-d4c6cf614736-dq-config`.
+
 
 ```
 touch dq-customer-orders.yaml
@@ -153,19 +159,20 @@ vi dq-customer-orders.yaml
 ```
 
 ```
-gsutil cp dq-customer-orders.yaml gs://qwiklabs-gcp-02-1d68c19bbb17-dq-config/
+gsutil cp dq-customer-orders.yaml gs://$PROJECT_ID-dq-config/
 ```
 
 ## Task 5. Define and run a data quality job in Dataplex
 
 The BigQuery dataset for step 1 has been pre-created in this lab.
 
-Define a data quality job using the dq-customer-orders.yaml file with the following specifications:
+Define a data quality job using the `dq-customer-orders.yaml` file with the following specifications:
 
-Property	Value
-Data Quality Job Name	Customer Orders Data Quality Job
-BigQuery destination table for the results	qwiklabs-gcp-02-1d68c19bbb17.orders_dq_dataset.results
-User service account	Compute Engine default service account
+| **Property**                     | **Value**                                                          |
+|-----------------------------------|--------------------------------------------------------------------|
+| **Data Quality Job Name**         | Customer Orders Data Quality Job                                   |
+| **BigQuery destination table**    | `qwiklabs-gcp-00-d4c6cf614736.orders_dq_dataset.results`           |
+| **User service account**          | Compute Engine default service account                             |
 
 Run the data quality job immediately.
 
@@ -177,7 +184,7 @@ Dataplex > Manage Lakes > Process > Data Quality
 
 Click "CREATE TASK" button > "Check Data Quality [Legacy offering]" > "CREATE TASK"
 
-https://console.cloud.google.com/dataplex/process/tasks?cloudshell=true&project=qwiklabs-gcp-01-f5c3af04c6aa&qTaskType=DATA_QUALITY
+https://console.cloud.google.com/dataplex/process/tasks?cloudshell=true&project=qwiklabs-gcp-00-d4c6cf614736&qTaskType=DATA_QUALITY
 
 
 ### Initial
@@ -189,9 +196,9 @@ Id - customer-orders-data-quality-job
 
 ### Data quality specification
 
-Select GCS file - qwiklabs-gcp-02-1d68c19bbb17-dq-config/dq-customer-orders.yaml
+Select GCS file - qwiklabs-gcp-00-d4c6cf614736-dq-config/dq-customer-orders.yaml
 
-Select BigQuery Dataset - qwiklabs-gcp-02-1d68c19bbb17.orders_dq_dataset
+Select BigQuery Dataset - qwiklabs-gcp-00-d4c6cf614736.orders_dq_dataset
 
 BigQUery Table - results
 

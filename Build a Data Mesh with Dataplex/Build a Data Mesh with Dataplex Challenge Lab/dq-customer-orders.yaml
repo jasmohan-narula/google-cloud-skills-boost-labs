@@ -1,39 +1,39 @@
 metadata_registry_defaults:
   dataplex:
-    projects: qwiklabs-gcp-02-1d68c19bbb17
+    projects: qwiklabs-gcp-00-d4c6cf614736
     locations: us-east1
     lakes: sales-lake
     zones: curated-customer-zone
 row_filters:
-NONE:
-  filter_sql_expr: |-
-    True
-INTERNATIONAL_ITEMS:
-  filter_sql_expr: |-
-    REGEXP_CONTAINS(item_id, 'INTNL')
+  NONE:
+    filter_sql_expr: |-
+      True
+  INTERNATIONAL_ITEMS:
+    filter_sql_expr: |-
+      REGEXP_CONTAINS(item_id, 'INTNL')
 rule_dimensions:
-- consistency
-- correctness
-- duplication
-- completeness
-- conformance
-- integrity
-- timeliness
-- accuracy
+  - consistency
+  - correctness
+  - duplication
+  - completeness
+  - conformance
+  - integrity
+  - timeliness
+  - accuracy
 rules:
-NOT_NULL:
-  rule_type: NOT_NULL
-  dimension: completeness
+  NOT_NULL:
+    rule_type: NOT_NULL
+    dimension: completeness
 rule_bindings:
-VALID_CUSTOMER:
-  entity_uri: bigquery://projects/qwiklabs-gcp-02-1d68c19bbb17/datasets/customer_orders/tables/ordered_items
-  column_id: user_id
-  row_filter_id: NONE
-  rule_ids:
-    - NOT_NULL
-VALID_ORDER:
-  entity_uri: bigquery://projects/qwiklabs-gcp-02-1d68c19bbb17/datasets/customer_orders/tables/ordered_items
-  column_id: order_id
-  row_filter_id: NONE
-  rule_ids:
-    - NOT_NULL
+  VALID_CUSTOMER:
+    entity_uri: bigquery://projects/qwiklabs-gcp-00-d4c6cf614736/datasets/customer_orders/tables/ordered_items
+    column_id: user_id
+    row_filter_id: NONE
+    rule_ids:
+      - NOT_NULL
+  VALID_ORDER:
+    entity_uri: bigquery://projects/qwiklabs-gcp-00-d4c6cf614736/datasets/customer_orders/tables/ordered_items
+    column_id: order_id
+    row_filter_id: NONE
+    rule_ids:
+      - NOT_NULL
